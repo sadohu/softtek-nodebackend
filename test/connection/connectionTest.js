@@ -5,6 +5,7 @@ const connectionTest = () => {
         connection.connect((err) => {
             if (err) {
                 console.error('Error connecting to MySQL Server:', err);
+                connection.end();
                 reject(err);
             } else {
                 console.log('Connected to MySQL Server!');
