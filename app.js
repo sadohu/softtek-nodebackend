@@ -1,9 +1,9 @@
 const handleRequest = require('./controller/handler');
 
-const serverApp = (req, res) => {
+const serverApp = (request, response) => {
     // Aquí puedes realizar cualquier lógica de middleware si es necesario
 
-    handleRequest(req, res);
+    handleRequest(request, response);
 };
 
 module.exports = serverApp;

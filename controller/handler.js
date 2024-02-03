@@ -1,13 +1,12 @@
-// handler.js
-const { connection } = require('../config/Connection');
+const MainController = require('./mainController');
 
-const handleRequest = (req, res) => {
-    if (req.url === '/' || req.url === '') {
-        res.writeHead(200, { 'Content-Type': 'text/plain' });
-        res.end('Hello World');
-    } else {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Not Found');
+const handleRequest = (request, response) => {
+    if (request.url === '/' || request.url === '') {
+        MainController.index(request, response);
+    }
+    else {
+        response.writeHead(404, { 'Content-Type': 'text/plain' });
+        response.end('Not Found');
     }
 };
 
