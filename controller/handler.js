@@ -6,6 +6,8 @@ const handleRequest = (request, response) => {
         MainController.index(request, response);
     } else if (request.url === '/personaje' && request.method === 'GET') {
         PersonajeController.get(request, response);
+    } else if (request.url === '/personaje' && request.method === 'POST') {
+        PersonajeController.post(request, response);
     }
     else {
         response.writeHead(404, { 'Content-Type': 'text/plain' });
