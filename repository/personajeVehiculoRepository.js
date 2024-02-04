@@ -2,7 +2,7 @@ const { connection } = require('../config/Connection');
 
 const findByIdPersonaje = (idPersonaje) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM personajevehiculo WHERE idPersonaje = ?', idPersonaje, (error, result) => {
+        connection.query('SELECT * FROM personaje_vehiculo WHERE idPersonaje = ?', idPersonaje, (error, result) => {
             if (error) {
                 reject(error);
                 return;
@@ -14,7 +14,7 @@ const findByIdPersonaje = (idPersonaje) => {
 
 const findByIdPersonajeAndIdVehiculo = (idPersonaje, idVehiculo) => {
     return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM personajevehiculo WHERE idPersonaje = ? AND idVehiculo = ?', [idPersonaje, idVehiculo], (error, result) => {
+        connection.query('SELECT * FROM personaje_vehiculo WHERE idPersonaje = ? AND idVehiculo = ?', [idPersonaje, idVehiculo], (error, result) => {
             if (error) {
                 reject(error);
                 return;
@@ -26,7 +26,7 @@ const findByIdPersonajeAndIdVehiculo = (idPersonaje, idVehiculo) => {
 
 const create = (personajevehiculo) => {
     return new Promise((resolve, reject) => {
-        connection.query('INSERT INTO personajevehiculo SET ?', personajevehiculo, (error, result) => {
+        connection.query('INSERT INTO personaje_vehiculo SET ?', personajevehiculo, (error, result) => {
             if (error) {
                 reject(error);
                 return;

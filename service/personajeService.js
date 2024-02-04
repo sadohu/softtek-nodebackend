@@ -51,7 +51,6 @@ const create = (personaje) => {
                  * @param {Object} personaje
                  * @function personajeRepository.create Crea un personaje
                  * @param idNewPersonaje Id del personaje insertado
-                 * @param newPersonaje Objeto del personaje insertado
                  */
                 const idNewPersonaje = await personajeRepository.create(personaje)
                     .then((result) => result.insertId)
@@ -71,7 +70,6 @@ const create = (personaje) => {
                 // console.log("newPersonaje", newPersonaje);
 
 
-                let idVehiculos = [];
                 /**
                  * Recorremos el array de vehiculos, si el vehiculo no existe en la base de datos, lo insertamos y guardamos el id
                  * Si el vehiculo existe, guardamos el id
@@ -80,6 +78,7 @@ const create = (personaje) => {
                  * @function vehiculoRepository.create Crea un vehiculo
                  * @param idVehiculos Array de ids de vehiculos
                  */
+                let idVehiculos = [];
                 for (const element of vehiculos) {
                     const existVehiculo = await vehiculoRepository.findByUrl(element)
                         .then((result) => result)
@@ -99,7 +98,12 @@ const create = (personaje) => {
                     }
                 }
 
-
+                /**
+                 * Obtenemos los vehiculos insertados
+                 * @param {Array} idVehiculos
+                 * @function vehiculoRepository.findById Busca un vehiculo por su id
+                 * @param listVehiculos Array de vehiculos insertados
+                 */
                 let listVehiculos = [];
                 for (const element of idVehiculos) {
                     const vehiculo = await vehiculoRepository.findById(element)
@@ -108,9 +112,15 @@ const create = (personaje) => {
 
                     listVehiculos = listVehiculos.concat(vehiculo);
                 }
-
                 // console.log("listVehiculos", listVehiculos);
 
+                /**
+                 * Recorremos el array de ids de vehiculos, insertamos el id del personaje y el id del vehiculo en la tabla personaje_vehiculo
+                 * @param {Array} listVehiculos
+                 * @function personajeVehiculoRepository.create Crea un registro en la tabla personaje_vehiculo
+                 * @param personajeVehiculo Objeto con el id del personaje y el id del vehiculo
+                 * @param inserted Objeto con el resultado de la insercion
+                 */
                 for (const element of listVehiculos) {
                     // console.log("element", element);
                     const personajeVehiculo = { idPersonaje: newPersonaje.idPersonaje, idVehiculo: element.idVehiculo };
@@ -120,8 +130,11 @@ const create = (personaje) => {
                     // console.log("inserted", inserted);
                 }
 
+                // Agregamos los vehiculos al personaje
                 newPersonaje.vehiculos = listVehiculos;
                 // console.log("newPersonaje", newPersonaje);
+
+
                 /**
                  * commit
                  */
