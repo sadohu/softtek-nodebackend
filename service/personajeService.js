@@ -1,13 +1,14 @@
 const { connection } = require('../config/Connection');
-const personajeRepository = require('../repository/personajeRepository');
-const vehiculoRepository = require('../repository/vehiculoRepository');
-const personajeVehiculoRepository = require('../repository/personajeVehiculoRepository');
+const personajeServiceImpl = require('./personajeServicesImpl');
 
 const getAll = async () => {
     return new Promise(async (resolve, reject) => {
-        await personajeRepository.findAll()
-            .then((result) => resolve(result))
-            .catch((error) => reject(error));
+        try {
+            const list = await personajeServiceImpl.getAllPersonajes();
+            resolve(list);
+        } catch (error) {
+            reject(error);
+        }
     });
 };
 
@@ -16,128 +17,49 @@ const create = (personaje) => {
 
         connection.beginTransaction(async () => {
             try {
-                // Obtenemos las peliculas
+                // Validamos los atributos extras del personaje
+                personajeServiceImpl.validExtrasAttributes(personaje, resolve, reject);
+
+                // Obtenemos los atributos extras del personaje
+                const peliculas = personaje.peliculas;
+                const especie = personaje.especie;
                 const vehiculos = personaje.vehiculos;
+                const navesEspaciales = personaje.navesEspaciales;
 
-                // Verificamos que el parametro de vehiculos no sea undefined, si lo es, rechazamos la promesa
-                if (vehiculos === undefined) {
-                    reject(new Error("Parametro de vehiculo es requerido"));
-                    return;
-                }
-
-                // Eliminamos el parametro de vehiculos del objeto personaje
+                // Eliminamos los atributos extras del personaje
+                delete personaje.peliculas;
+                delete personaje.especie;
                 delete personaje.vehiculos;
+                delete personaje.navesEspaciales;
 
-                /**
-                 * Buscamos el personaje por su url, si existe, rechazamos la promesa
-                 * Si no existe, lo insertamos y obtenemos el id
-                 * @param {Object} personaje
-                 * @function personajeRepository.findByUrl Busca un personaje por su url
-                 * @param existPersonaje Array de personajes que coinciden con la url
-                 */
-                const existPersonaje = await personajeRepository.findByUrl(personaje.url)
-                    .then((result) => result)
-                    .catch((error) => reject(error));
-                // console.log("existPersonaje", existPersonaje);
+                // Obtenemos al personaje por su url
+                const existPersonaje = await personajeServiceImpl.personajeFindByUrl(personaje.url);
 
-                // Si el personaje existe, rechazamos la promesa
+                // Si el personaje existe, detenemos la ejecucion
                 if (existPersonaje.length > 0) {
                     reject(new Error("El personaje ya existe"));
                     return;
                 }
 
-                /**
-                 * Insertamos el personaje y obtenemos el id
-                 * @param {Object} personaje
-                 * @function personajeRepository.create Crea un personaje
-                 * @param idNewPersonaje Id del personaje insertado
-                 */
-                const idNewPersonaje = await personajeRepository.create(personaje)
-                    .then((result) => result.insertId)
-                    .catch((error) => reject(error));
-                // console.log("idNewPersonaje", idNewPersonaje);
+                // Insertamos el personaje y obtenemos el id
+                const idNewPersonaje = await personajeServiceImpl.personajeCreate(personaje);
 
-                /**
-                 * Obtenemos el personaje insertado
-                 * @param {Number} idNewPersonaje
-                 * @function personajeRepository.findById Busca un personaje por su id
-                 * @param newPersonaje Objeto del personaje insertado
-                 */
                 // Obtenemos el personaje insertado
-                const newPersonaje = await personajeRepository.findById(idNewPersonaje)
-                    .then((result) => result[0])
-                    .catch((error) => reject(error));
-                // console.log("newPersonaje", newPersonaje);
+                const newPersonaje = await personajeServiceImpl.personajeFindById(idNewPersonaje);
 
+                // Obtenemos los ids de los vehiculos insertados o existentes
+                const idVehiculos = await personajeServiceImpl.getIdVehiculos(vehiculos);
 
-                /**
-                 * Recorremos el array de vehiculos, si el vehiculo no existe en la base de datos, lo insertamos y guardamos el id
-                 * Si el vehiculo existe, guardamos el id
-                 * @param {Array} vehiculos
-                 * @function vehiculoRepository.findByUrl Busca un vehiculo por su url
-                 * @function vehiculoRepository.create Crea un vehiculo
-                 * @param idVehiculos Array de ids de vehiculos
-                 */
-                let idVehiculos = [];
-                for (const element of vehiculos) {
-                    const existVehiculo = await vehiculoRepository.findByUrl(element)
-                        .then((result) => result)
-                        .catch((error) => reject(error));
-                    // console.log("existVehiculo", existVehiculo);
+                // Obtenemos los vehiculos por su id
+                const listVehiculos = await personajeServiceImpl.getListVehiculos(idVehiculos);
 
-                    if (existVehiculo.length === 0) {
-                        const obj = { url: element };
-                        const inserted = await vehiculoRepository.create(obj)
-                            .then((result) => result.insertId)
-                            .catch((error) => reject(error));
-                        // console.log("inserted", inserted);
-                        idVehiculos.push(inserted);
-                    } else {
-                        // console.log("existVehiculo[0].idVehiculo", existVehiculo[0].idVehiculo);
-                        idVehiculos.push(existVehiculo[0].idVehiculo);
-                    }
-                }
+                // Insertamos los vehiculos al personaje
+                personajeServiceImpl.vehiculosBindToPersonaje(newPersonaje, listVehiculos);
 
-                /**
-                 * Obtenemos los vehiculos insertados
-                 * @param {Array} idVehiculos
-                 * @function vehiculoRepository.findById Busca un vehiculo por su id
-                 * @param listVehiculos Array de vehiculos insertados
-                 */
-                let listVehiculos = [];
-                for (const element of idVehiculos) {
-                    const vehiculo = await vehiculoRepository.findById(element)
-                        .then((result) => result)
-                        .catch((error) => reject(error));
-
-                    listVehiculos = listVehiculos.concat(vehiculo);
-                }
-                // console.log("listVehiculos", listVehiculos);
-
-                /**
-                 * Recorremos el array de ids de vehiculos, insertamos el id del personaje y el id del vehiculo en la tabla personaje_vehiculo
-                 * @param {Array} listVehiculos
-                 * @function personajeVehiculoRepository.create Crea un registro en la tabla personaje_vehiculo
-                 * @param personajeVehiculo Objeto con el id del personaje y el id del vehiculo
-                 * @param inserted Objeto con el resultado de la insercion
-                 */
-                for (const element of listVehiculos) {
-                    // console.log("element", element);
-                    const personajeVehiculo = { idPersonaje: newPersonaje.idPersonaje, idVehiculo: element.idVehiculo };
-                    const inserted = await personajeVehiculoRepository.create(personajeVehiculo)
-                        .then((result) => result)
-                        .catch((error) => reject(error));
-                    // console.log("inserted", inserted);
-                }
-
-                // Agregamos los vehiculos al personaje
+                // Agregamos los atributos extras al personaje
                 newPersonaje.vehiculos = listVehiculos;
-                // console.log("newPersonaje", newPersonaje);
 
-
-                /**
-                 * commit
-                 */
+                // Realizamos el commit
                 connection.commit((error) => {
                     if (error) {
                         connection.rollback(() => {
