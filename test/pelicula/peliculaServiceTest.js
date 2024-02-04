@@ -17,9 +17,9 @@ const getById = async (id) => {
     });
 };
 
-const create = async (especie) => {
+const create = async (pelicula) => {
     return new Promise(async (resolve, reject) => {
-        await peliculaRepository.create(especie)
+        await peliculaRepository.create(pelicula)
             .then((result) => resolve(result.insertId))
             .catch((error) => reject(error));
     });
