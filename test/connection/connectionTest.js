@@ -4,13 +4,13 @@ const connectionTest = () => {
     return new Promise((resolve, reject) => {
         connection.connect((err) => {
             if (err) {
-                console.error('Error connecting to MySQL Server:', err);
+                // console.error('Error connecting to MySQL Server:', err);
                 connection.end();
                 reject(err);
             } else {
-                console.log('Connected to MySQL Server!');
+                // console.log('Connected to MySQL Server!');
                 connection.end();
-                console.log('Disconnected from MySQL Server!');
+                // console.log('Disconnected from MySQL Server!');
                 resolve();
             }
         });
