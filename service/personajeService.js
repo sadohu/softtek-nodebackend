@@ -1,5 +1,6 @@
 const { connection } = require('../config/Connection');
 const personajeServiceImpl = require('./personajeServicesImpl');
+const vehiculoServiceImpl = require('./vehiculoServicesImpl');
 
 const getAll = async () => {
     return new Promise(async (resolve, reject) => {
@@ -48,13 +49,13 @@ const create = (personaje) => {
                 const newPersonaje = await personajeServiceImpl.personajeFindById(idNewPersonaje);
 
                 // Obtenemos los ids de los vehiculos insertados o existentes
-                const idVehiculos = await personajeServiceImpl.getIdVehiculos(vehiculos);
+                const idVehiculos = await vehiculoServiceImpl.getIdVehiculos(vehiculos);
 
                 // Obtenemos los vehiculos por su id
-                const listVehiculos = await personajeServiceImpl.getListVehiculos(idVehiculos);
+                const listVehiculos = await vehiculoServiceImpl.getListVehiculos(idVehiculos);
 
                 // Insertamos los vehiculos al personaje
-                personajeServiceImpl.vehiculosBindToPersonaje(newPersonaje, listVehiculos);
+                vehiculoServiceImpl.vehiculosBindToPersonaje(newPersonaje, listVehiculos);
 
                 // Agregamos los atributos extras al personaje
                 newPersonaje.vehiculos = listVehiculos;
