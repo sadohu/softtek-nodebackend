@@ -10,7 +10,7 @@ const vehiculoFindByUrl = async (url) => {
     return new Promise(async (resolve, reject) => {
         await vehiculoRepository.findByUrl(url)
             .then((result) => resolve(result))
-            .catch((error) => reject(error));
+            .catch((error) => reject(new Error(error)));
     });
 };
 
@@ -23,7 +23,7 @@ const vehiculoFindById = async (id) => {
     return new Promise(async (resolve, reject) => {
         await vehiculoRepository.findById(id)
             .then((result) => resolve(result[0]))
-            .catch((error) => reject(error));
+            .catch((error) => reject(new Error(error)));
     });
 };
 
@@ -36,7 +36,7 @@ const vehiculoCreate = async (vehiculo) => {
     return new Promise(async (resolve, reject) => {
         await vehiculoRepository.create(vehiculo)
             .then((result) => resolve(result.insertId))
-            .catch((error) => reject(error));
+            .catch((error) => reject(new Error(error)));
     });
 };
 
@@ -83,7 +83,7 @@ const personajeVehiculoCreate = async (personajeVehiculo) => {
     return new Promise(async (resolve, reject) => {
         await personajeVehiculoRepository.create(personajeVehiculo)
             .then((result) => resolve(result))
-            .catch((error) => reject(error));
+            .catch((error) => reject(new Error(error)));
     });
 
 };
@@ -99,7 +99,7 @@ const vehiculosBindToPersonaje = async (personaje, vehiculoList) => {
             const personajeVehiculo = { idPersonaje: personaje.idPersonaje, idVehiculo: element.idVehiculo };
             const inserted = await personajeVehiculoRepository.create(personajeVehiculo)
                 .then((result) => result)
-                .catch((error) => reject(error));
+                .catch((error) => reject(new Error(error)));
         }
     });
 

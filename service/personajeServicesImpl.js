@@ -29,7 +29,7 @@ const getAllPersonajes = async () => {
     return new Promise(async (resolve, reject) => {
         await personajeRepository.findAll()
             .then((result) => resolve(result))
-            .catch((error) => reject(error));
+            .catch((error) => reject(new Error(error)));
     });
 
 };
@@ -43,7 +43,7 @@ const personajeFindByUrl = async (url) => {
     return new Promise(async (resolve, reject) => {
         await personajeRepository.findByUrl(url)
             .then((result) => resolve(result))
-            .catch((error) => reject(error));
+            .catch((error) => reject(new Error(error)));
     });
 };
 
@@ -56,7 +56,7 @@ const personajeFindById = async (id) => {
     return new Promise(async (resolve, reject) => {
         await personajeRepository.findById(id)
             .then((result) => resolve(result[0]))
-            .catch((error) => reject(error));
+            .catch((error) => reject(new Error(error)));
     });
 
 };
@@ -70,7 +70,7 @@ const personajeCreate = async (personaje) => {
     return new Promise(async (resolve, reject) => {
         await personajeRepository.create(personaje)
             .then((result) => resolve(result.insertId))
-            .catch((error) => reject(error));
+            .catch((error) => reject(new Error(error)));
     });
 };
 
