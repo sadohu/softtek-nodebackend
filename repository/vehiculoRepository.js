@@ -36,4 +36,23 @@ const create = (vehiculo) => {
     });
 };
 
-module.exports = { findById, findByUrl, create };
+const findByIdPersonaje = async (idPersonaje) => {
+    try {
+        const [rows] = await connection.promise().query(
+            `SELECT v.* FROM vehiculo v
+            inner join personaje_vehiculo mt on mt.idVehiculo = v.idVehiculo
+            where mt.idPersonaje = ? `,
+            idPersonaje
+        );
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+module.exports = {
+    findById,
+    findByUrl,
+    create,
+    findByIdPersonaje,
+};

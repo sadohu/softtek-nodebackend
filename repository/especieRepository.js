@@ -36,4 +36,23 @@ const create = (especie) => {
     });
 };
 
-module.exports = { findById, findByUrl, create };
+const findByIdPersonaje = async (idPersonaje) => {
+    try {
+        const [rows] = await connection.promise().query(
+            `SELECT e.* FROM especie e
+            inner join personaje_especie mt on mt.idEspecie = e.idEspecie
+            where mt.idPersonaje = ? `,
+            idPersonaje
+        );
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+module.exports = {
+    findById,
+    findByUrl,
+    create,
+    findByIdPersonaje,
+};

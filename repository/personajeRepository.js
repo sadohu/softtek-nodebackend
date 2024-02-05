@@ -1,15 +1,12 @@
 const { connection } = require('../config/Connection');
 
-const findAll = () => {
-    return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM personaje', (error, result) => {
-            if (error) {
-                reject(error);
-            }
-
-            resolve(result);
-        });
-    });
+const findAll = async () => {
+    try {
+        const [rows] = await connection.promise().query('SELECT * FROM personaje');
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
 };
 
 const findById = (id) => {

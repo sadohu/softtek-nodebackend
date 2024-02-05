@@ -36,4 +36,23 @@ const create = (nave) => {
     });
 };
 
-module.exports = { findById, findByUrl, create };
+const findByIdPersonaje = async (idPersonaje) => {
+    try {
+        const [rows] = await connection.promise().query(
+            `SELECT n.* FROM navesespaciales n
+            inner join personaje_navesespaciales mt on mt.idNavesEspaciales = n.idNavesEspaciales
+            where mt.idPersonaje = ? `,
+            idPersonaje
+        );
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+module.exports = {
+    findById,
+    findByUrl,
+    create,
+    findByIdPersonaje,
+};

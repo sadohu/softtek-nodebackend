@@ -36,4 +36,23 @@ const create = (pelicula) => {
     });
 };
 
-module.exports = { findById, findByUrl, create };
+const findByIdPersonaje = async (idPersonaje) => {
+    try {
+        const [rows] = await connection.promise().query(
+            `SELECT e.* FROM pelicula e
+            inner join personaje_pelicula mt on mt.idPelicula = e.idPelicula
+            where mt.idPersonaje = ? `,
+            idPersonaje
+        );
+        return rows;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+module.exports = {
+    findById,
+    findByUrl,
+    create,
+    findByIdPersonaje,
+};
