@@ -1,4 +1,8 @@
 const personajeRepository = require('../repository/personajeRepository');
+const peliculaRepository = require('../repository/peliculaRepository');
+const especieRepository = require('../repository/especieRepository');
+const vehiculoRepository = require('../repository/vehiculoRepository');
+const navesEspacialesRepository = require('../repository/navesEspacialesRepository');
 
 /**
  * Valida los atributos extras de un personaje
@@ -21,13 +25,78 @@ const validExtrasAttributes = (personaje) => {
     }
 };
 
+/**
+ * @returns Lista de personajes con sus atributos extras
+ */
 const getAllPersonajes = async () => {
-    return new Promise(async (resolve, reject) => {
-        await personajeRepository.findAll()
-            .then((result) => resolve(result))
-            .catch((error) => reject(new Error(error)));
-    });
+    try {
+        const personajes = await personajeRepository.findAll();
+        for (const element of personajes) {
+            const peliculas = await getPeliculasByIdPersonaje(element.idPersonaje);
+            const especies = await getEspeciesByIdPersonaje(element.idPersonaje);
+            const vehiculos = await getVehiculosByIdPersonaje(element.idPersonaje);
+            const navesEspaciales = await getNavesEspacialesByIdPersonaje(element.idPersonaje);
+            element.peliculas = peliculas;
+            element.especies = especies;
+            element.vehiculos = vehiculos;
+            element.navesEspaciales = navesEspaciales;
+        }
+        return personajes;
+    } catch (error) {
+        throw new Error(error);
+    }
+};
 
+/**
+ * Obtiene las peliculas por id del personaje
+ * @param {*} idPersonaje Id del personaje
+ * @returns Lista de peliculas del personaje
+ */
+const getPeliculasByIdPersonaje = async (idPersonaje) => {
+    try {
+        return await peliculaRepository.findByIdPersonaje(idPersonaje);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+/**
+ * Obtiene las especies por id del personaje
+ * @param {*} idPersonaje Id del personaje
+ * @returns Lista de especies del personaje
+ */
+const getEspeciesByIdPersonaje = async (idPersonaje) => {
+    try {
+        return await especieRepository.findByIdPersonaje(idPersonaje);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+/**
+ * Obtiene los vehiculos por id del personaje
+ * @param {*} idPersonaje Id del personaje
+ * @returns Lista de vehiculos del personaje
+ */
+const getVehiculosByIdPersonaje = async (idPersonaje) => {
+    try {
+        return await vehiculoRepository.findByIdPersonaje(idPersonaje);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+/**
+ * Obtiene las navesEspaciales por id del personaje
+ * @param {*} idPersonaje Id del personaje
+ * @returns Lista de navesEspaciales del personaje
+ */
+const getNavesEspacialesByIdPersonaje = async (idPersonaje) => {
+    try {
+        return await navesEspacialesRepository.findByIdPersonaje(idPersonaje);
+    } catch (error) {
+        throw new Error(error);
+    }
 };
 
 /**
@@ -76,4 +145,5 @@ module.exports = {
     personajeFindByUrl,
     personajeFindById,
     personajeCreate,
+    getPeliculasByIdPersonaje,
 };
