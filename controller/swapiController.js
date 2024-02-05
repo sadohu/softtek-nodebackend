@@ -115,7 +115,7 @@ const translateKeys = async (cleanKeys) => {
     const translatorResponse = await fetch(MICROSOFT_TRANSLATOR_FROM_EN_TO_ES, {
         method: 'POST',
         headers: {
-            'Ocp-Apim-Subscription-Key': process.env.MICROSOFT_TRANLATOR_API_KEY,
+            'Ocp-Apim-Subscription-Key': process.env.MICROSOFT_TRANSLATOR_API_KEY,
             'Ocp-Apim-Subscription-Region': process.env.MICROSOFT_TRANSLATOR_API_REGION,
             'Content-Type': 'application/json',
         },

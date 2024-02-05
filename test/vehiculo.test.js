@@ -34,7 +34,7 @@ test('vehiculoServiceTest creates a row in personajeVehiculo table', async () =>
 
 test('vehiculoServiceTest return id of personajeVehiculo table', async () => {
     const personaje = { idPersonaje: 1 };
-    const listVehiculos = [{ idVehiculo: 35 }, { idVehiculo: 36 }];
+    const listVehiculos = [{ idVehiculo: 1 }, { idVehiculo: 2 }];
     return vehiculoServiceTest.vehiculosBindToPersonaje(personaje, listVehiculos).then(() => {
         expect(true).toBe(true);
     });

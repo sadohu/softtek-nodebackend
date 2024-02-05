@@ -24,7 +24,7 @@ test('peliculaServiceTest returns a row from pelicula table by id', async () => 
 
 test('peliculaServiceTest creates a row in personajePelicula table', async () => {
     const personajePelicula = {
-        idPersonaje: 45,
+        idPersonaje: 1,
         idPelicula: 1
     };
     return peliculaServiceTest.personajePeliculaCreate(personajePelicula).then(() => {
@@ -33,7 +33,7 @@ test('peliculaServiceTest creates a row in personajePelicula table', async () =>
 });
 
 test('peliculaServiceTest return id of personajePelicula table', async () => {
-    const personaje = { idPersonaje: 45 };
+    const personaje = { idPersonaje: 1 };
     const listPeliculas = [{ idPelicula: 1 }];
     return peliculaServiceTest.peliculasBindToPersonaje(personaje, listPeliculas).then(() => {
         expect(true).toBe(true);
