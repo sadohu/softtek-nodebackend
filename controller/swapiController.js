@@ -1,6 +1,24 @@
 const { HttpStatusCode } = require('axios');
 const { SWAPI_PEOPLE, MICROSOFT_TRANSLATOR_FROM_EN_TO_ES } = require('../helper/apiServices');
 
+/**
+ * @swagger
+ * /swapi:
+ *   get:
+ *     summary: Obtener personajes de Star Wars.
+ *     description: Obtiene la lista de personajes de Star Wars.
+ *     responses:
+ *       200:
+ *         description: Éxito.
+ *         content:
+ *           application/json:
+ *             example: { "status": 200, "message": "OK", "data": [] }
+ *       500:
+ *         description: Error del servidor.
+ *         content:
+ *           application/json:
+ *             example: { "status": 500, "message": "Internal Server Error", "error": "Error details" }
+ */
 const get = async (request, response) => {
     const responseBody = {};
     try {
@@ -19,6 +37,24 @@ const get = async (request, response) => {
     }
 };
 
+/**
+ * @swagger
+ * /swapi/es:
+ *   get:
+ *     summary: Obtener personajes de Star Wars en español.
+ *     description: Obtiene la lista de personajes de Star Wars con las 'keys' en español.
+ *     responses:
+ *       200:
+ *         description: Éxito.
+ *         content:
+ *           application/json:
+ *             example: { "status": 200, "message": "OK", "data": [] }
+ *       500:
+ *         description: Error del servidor.
+ *         content:
+ *           application/json:
+ *             example: { "status": 500, "message": "Internal Server Error", "error": "Error details" }
+ */
 const getSpanish = async (request, response) => {
     const responseBody = {};
     try {
