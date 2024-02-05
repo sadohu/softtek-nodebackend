@@ -65,12 +65,15 @@
 
 ### Puntos de consideración
 - Debido a que el traductor es impreciso con los datos que genera es recomendable que se use el `Request Body` del método `POST`
-- Los modelos que se usaron para crear la base de datos se cuentran en el archivo `data.json` en la base del proyecto
+- Los modelos que se usaron para crear la base de datos se encuentran en el archivo `data.json` en la carpeta `database`
 
 ### Ejecutar Test
 Las pruebas unitarias se centraron a la insercción de data en la base de datos además de los listados de los mismos
-- Ejecutar `npm test` en la terminal, generará que se ejecuten todas las pruebas
-- Ejecutar `npm test *nombre_archivo*.test.js` en la terminal, geneará que se ejecuten solo las pruebas de ese archivo
+1. Unit Test
+   - Ejecutar `npm test` en la terminal, generará que se ejecuten todas las pruebas
+   - Ejecutar `npm test *nombre_archivo*.test.js` en la terminal, geneará que se ejecuten solo las pruebas de ese archivo
+2. Endpoints tests (Postman)
+   - En la carpeta `database` se encontrará el archivo `Softtek.postman_collection.json` el cual se puede importar y obtener la collección usada
 
 
 
