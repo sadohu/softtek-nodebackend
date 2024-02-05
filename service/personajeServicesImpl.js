@@ -6,22 +6,18 @@ const personajeRepository = require('../repository/personajeRepository');
  * @param {*} reject Error si el personaje no tiene los atributos requeridos
  * @returns Detiene la ejecucion si el personaje no tiene los atributos requeridos
  */
-const validExtrasAttributes = (personaje, resolve, reject) => {
+const validExtrasAttributes = (personaje) => {
     if (personaje.peliculas === undefined) {
-        reject(new Error("Parametro de peliculas es requerido"));
-        return;
+        throw Error("Parametro de peliculas es requerido");
     }
     if (personaje.especie === undefined) {
-        reject(new Error("Parametro de especie es requerido"));
-        return;
+        throw Error("Parametro de especie es requerido");
     }
     if (personaje.vehiculos === undefined) {
-        reject(new Error("Parametro de vehiculos es requerido"));
-        return;
+        throw Error("Parametro de vehiculos es requerido");
     }
     if (personaje.navesEspaciales === undefined) {
-        reject(new Error("Parametro de navesEspaciales es requerido"));
-        return;
+        throw Error("Parametro de navesEspaciales es requerido");
     }
 };
 
