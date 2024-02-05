@@ -24,7 +24,7 @@ test('navesEspacialesServiceTest returns a row from navesespaciales table by id'
 
 test('navesEspacialesServiceTest creates a row in personajeNavesEspaciales table', async () => {
     const personajeNavesEspaciales = {
-        idPersonaje: 45,
+        idPersonaje: 1,
         idNavesEspaciales: 1
     };
     return navesEspacialesServiceTest.personajeNavesEspacialesCreate(personajeNavesEspaciales).then(() => {
@@ -33,7 +33,7 @@ test('navesEspacialesServiceTest creates a row in personajeNavesEspaciales table
 });
 
 test('navesEspacialesServiceTest return id of personajeNavesEspaciales table', async () => {
-    const personaje = { idPersonaje: 45 };
+    const personaje = { idPersonaje: 1 };
     const listNaves = [{ idNavesEspaciales: 1 }];
     return navesEspacialesServiceTest.navesEspacialesBindToPersonaje(personaje, listNaves).then(() => {
         expect(true).toBe(true);

@@ -24,7 +24,7 @@ test('especieServiceTest returns a row from especie table by id', async () => {
 
 test('especieServiceTest creates a row in personajeEspecie table', async () => {
     const personajeEspecie = {
-        idPersonaje: 45,
+        idPersonaje: 1,
         idEspecie: 1
     };
     return especieServiceTest.personajeEspecieCreate(personajeEspecie).then(() => {
@@ -33,7 +33,7 @@ test('especieServiceTest creates a row in personajeEspecie table', async () => {
 });
 
 test('especieServiceTest return id of personajeEspecie table', async () => {
-    const personaje = { idPersonaje: 45 };
+    const personaje = { idPersonaje: 1 };
     const listEspecies = [{ idEspecie: 1 }];
     return especieServiceTest.especiesBindToPersonaje(personaje, listEspecies).then(() => {
         expect(true).toBe(true);
