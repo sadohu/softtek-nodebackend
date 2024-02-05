@@ -46,7 +46,7 @@
 
 ### Instalación de la aplicación
 1. Abrir la terminar y ubicarse en el proyecto
-2. Ejecutar `npm install`
+2. Ejecutar `npm install` en la terminal
 3. En la carpeta `database` encontraremos el script `swapidb.sql` el cual ejecutaremos en MySql
 
 ### Configuración del proyecto
@@ -56,11 +56,21 @@
 4. MYSQL_USER = USER DE MYSQL Ej: `root`
 5. MYSQL_PASS = CONTRASEÑA DEL USUARIO `123456`
 6. MYSQL_DB = NOMBRE DE LA BASE DE DATOS `swapidb` (Por defecto en en el Script)
-7. ⚠ `MICROSOFT_TRANLATOR_API_KEY` agregaremos el `api key del traductor` proporcionada por el desarrollador ⚠
+7. ⚠ MICROSOFT_TRANSLATOR_API_KEY agregaremos el `Api Key` proporcionada por el desarrollador ⚠
+   - Debido a un advertencia en github, el apikey no puede ser expuesta
 
 ### Uso de la aplicación
-1. Ejecutar `node server.js`
+1. Ejecutar `node server.js` en la terminal
 2. Abrir en el navegador http://localhost:3000/api-docs/
+
+### Puntos de consideración
+- Debido a que el traductor es impreciso con los datos que genera es recomendable que se use el `Request Body` del método `POST`
+- Los modelos que se usaron para crear la base de datos se cuentran en el archivo `data.json` en la base del proyecto
+
+### Ejecutar Test
+Las pruebas unitarias se centraron a la insercción de data en la base de datos además de los listados de los mismos
+- Ejecutar `npm test` en la terminal, generará que se ejecuten todas las pruebas
+- Ejecutar `npm test *nombre_archivo*.test.js` en la terminal, geneará que se ejecuten solo las pruebas de ese archivo
 
 
 
