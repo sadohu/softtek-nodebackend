@@ -95,14 +95,18 @@ const personajeVehiculoCreate = async (personajeVehiculo) => {
  */
 const vehiculosBindToPersonaje = async (personaje, vehiculoList) => {
     return new Promise(async (resolve, reject) => {
-        for (const element of vehiculoList) {
-            const personajeVehiculo = { idPersonaje: personaje.idPersonaje, idVehiculo: element.idVehiculo };
-            const inserted = await personajeVehiculoRepository.create(personajeVehiculo)
-                .then((result) => result)
-                .catch((error) => reject(new Error(error)));
+        try {
+            for (const element of vehiculoList) {
+                const personajeVehiculo = { idPersonaje: personaje.idPersonaje, idVehiculo: element.idVehiculo };
+                const inserted = await personajeVehiculoRepository.create(personajeVehiculo)
+                    .then((result) => result)
+                    .catch((error) => reject(new Error(error)));
+            }
+            resolve(true);
+        } catch (error) {
+            reject(new Error(error));
         }
     });
-
 };
 
 module.exports = {
