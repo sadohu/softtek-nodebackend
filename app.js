@@ -1,9 +1,13 @@
-const handleRequest = require('./controller/handler');
+const serverApp = require('./controller/handler');
+const express = require('express');
+const swagger = require('./swagger.config');
 
-const serverApp = (request, response) => {
-    // Aquí puedes realizar cualquier lógica de middleware si es necesario
+const app = express();
 
-    handleRequest(request, response);
-};
+// Monta la documentación Swagger en la ruta /api-docs
+app.use('/api-docs', swagger.serve, swagger.setup);
 
-module.exports = serverApp;
+// Lógica de manejo de rutas
+app.use(serverApp);
+
+module.exports = app;
