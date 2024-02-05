@@ -1,0 +1,73 @@
+{
+	"info": {
+		"_postman_id": "f033db92-d47b-42dc-ac44-005dd722269e",
+		"name": "Softtek",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "26508356"
+	},
+	"item": [
+		{
+			"name": "swapi - peoples",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "https://swapi.dev/api/people/1/"
+			},
+			"response": []
+		},
+		{
+			"name": "softtek - main",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/"
+			},
+			"response": []
+		},
+		{
+			"name": "softtek -  swapi",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/swapi"
+			},
+			"response": []
+		},
+		{
+			"name": "softtek -  swapi/es",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/swapi"
+			},
+			"response": []
+		},
+		{
+			"name": "softtek - personaje",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": "http://localhost:3000/personaje"
+			},
+			"response": []
+		},
+		{
+			"name": "softtek - personaje",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nombre\": \"C-3PO\",\r\n    \"altura\": \"167\",\r\n    \"masa\": \"75\",\r\n    \"colorDeCabello\": \"n/a\",\r\n    \"colorDeLaPiel\": \"gold\",\r\n    \"colorDeOjos\": \"yellow\",\r\n    \"anoDeNacimiento\": \"112BBY\",\r\n    \"genero\": \"n/a\",\r\n    \"mundoNatal\": \"https://swapi.dev/api/planets/1/\",\r\n    \"peliculas\": [\r\n        \"https://swapi.dev/api/films/1/\",\r\n        \"https://swapi.dev/api/films/2/\",\r\n        \"https://swapi.dev/api/films/3/\",\r\n        \"https://swapi.dev/api/films/4/\",\r\n        \"https://swapi.dev/api/films/5/\",\r\n        \"https://swapi.dev/api/films/6/\"\r\n    ],\r\n    \"especie\": [\r\n        \"https://swapi.dev/api/species/2/\"\r\n    ],\r\n    \"vehiculos\": [],\r\n    \"navesEspaciales\": [],\r\n    \"creado\": \"2014-12-10T15:10:51.357000Z\",\r\n    \"editado\": \"2014-12-20T21:17:50.309000Z\",\r\n    \"url\": \"https://swapi.dev/api/people/107/\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:3000/personaje"
+			},
+			"response": []
+		}
+	]
+}
