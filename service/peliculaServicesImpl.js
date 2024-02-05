@@ -72,9 +72,8 @@ const peliculasBindToPersonaje = async (personaje, peliculaList) => {
             }
             resolve(true);
         } catch (error) {
-            reject(false);
+            reject(new Error(error));
         }
-
     });
 };
 
