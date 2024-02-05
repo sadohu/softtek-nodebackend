@@ -6,14 +6,11 @@ const vehiculoServiceImpl = require('./vehiculoServicesImpl');
 const navesEspacialesServiceImpl = require('./navesEspacialesServicesImpl');
 
 const getAll = async () => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            const list = await personajeServiceImpl.getAllPersonajes();
-            resolve(list);
-        } catch (error) {
-            reject(error);
-        }
-    });
+    try {
+        return await personajeServiceImpl.getAllPersonajes();
+    } catch (error) {
+        throw Error(error);
+    }
 };
 
 const create = async (personaje) => {
